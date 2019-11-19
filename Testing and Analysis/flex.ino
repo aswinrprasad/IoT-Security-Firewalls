@@ -3,10 +3,13 @@
  
 String apiKey = "401RDNI2N6QT1YNR";     //  Enter your Write API key from ThingSpeak
 
-const char *ssid =  "exodus";     // replace with your wifi ssid and wpa2 key
-const char *pass =  "reborn336g";
+const char *ssid =  "DopeDevice";     // replace with your wifi ssid and wpa2 key
+const char *pass =  "aswin123456";
 const char* server = "api.thingspeak.com";
 
+IPAddress local_IP(192,168,4,22);
+IPAddress gateway(192,168,4,9);
+IPAddress subnet(255,255,255,0);
 
 //Constants:
 static const uint8_t ledPin   = 0;  //pin D3 has PWM funtion
@@ -22,8 +25,10 @@ void setup()
   pinMode(ledPin, OUTPUT);  //Set pin 3 as 'output'
   Serial.begin(115200);
   delay(10);
-  Serial.println("Connecting to ");
+  Serial.println("\n\nConnecting to ");
   Serial.println(ssid);
+  WiFi.softAPConfig(local_IP, gateway, subnet);
+  WiFi.softAP("NODEMCU");
   WiFi.begin(ssid, pass);
  
   while (WiFi.status() != WL_CONNECTED){

@@ -1,6 +1,12 @@
 #include <ESP8266WiFi.h>
 #include "Mac.h"
 
+IPAddress local_IP(192,168,4,22);
+
+IPAddress gateway(192,168,4,9);
+
+IPAddress subnet(255,255,255,0);
+
 extern "C" {
   #include "user_interface.h"
 }
@@ -23,6 +29,7 @@ int curChannel = channel;
 const char* ssid     = "NodeMCU";
 const char* password = "123456789";
 
+
 void sniffer(uint8_t *buf, uint16_t len) {
 
 if(buf[12] == 0xA0){
@@ -43,17 +50,20 @@ else{
 }
 
 void setup() {
+  
   Serial.begin(115200);
-  wifi_set_opmode(STATIONAP_MODE);
+  //WiFi.mode(WIFI_AP_STA);
+  //WiFi.softAPConfig(local_IP, gateway, subnet);
+  wifi_set_opmode(STATION_MODE);
   wifi_promiscuous_enable(0);
   WiFi.disconnect();
   wifi_set_promiscuous_rx_cb(sniffer);
   wifi_set_channel(1);
   wifi_promiscuous_enable(1);
+  WiFi.softAP(ssid, password);
 
-  pinMode(D5, OUTPUT);
-  pinMode(D6, OUTPUT);
-  pinMode(D7, OUTPUT);
+  pinMode(LED_BUILTIN, OUTPUT);
+  pinMode(2, OUTPUT);
   
   Serial.println("starting!");
 
@@ -67,12 +77,18 @@ void loop() {
     //Serial.println((String)c);
 
     if(deauth >= 1){
-      Serial.println("Deauth attack!");
+      //Serial.println("Deauth attack!");
+      digitalWrite(LED_BUILTIN, LOW);
+      digitalWrite(2, LOW);
     }
-    if(dissoc >= 1){
+    else{
+      digitalWrite(LED_BUILTIN, HIGH);
+      digitalWrite(2, HIGH);
+    }
+    /*if(dissoc >= 1){
       Serial.println("Dissoc attack!");
     }
-    /*if(channelHopping){
+    if(channelHopping){
       curChannel++;
       if(curChannel > maxChannel) curChannel = 1;
       wifi_set_channel(1);

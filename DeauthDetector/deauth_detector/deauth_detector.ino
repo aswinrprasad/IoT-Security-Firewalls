@@ -85,14 +85,14 @@ void loop() {
       digitalWrite(LED_BUILTIN, HIGH);
       digitalWrite(2, HIGH);
     }
-    /*if(dissoc >= 1){
+    if(dissoc >= 1){
       Serial.println("Dissoc attack!");
     }
     if(channelHopping){
       curChannel++;
       if(curChannel > maxChannel) curChannel = 1;
-      wifi_set_channel(1);
-    }*/
+      wifi_set_channel(curChannel);
+    }
   }
 
 }

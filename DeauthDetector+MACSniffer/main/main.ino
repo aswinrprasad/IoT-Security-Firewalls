@@ -121,7 +121,7 @@ void setup()
   // Serial setup
   Serial.begin(115200);
   delay(10);
-  wifi_set_channel(1);
+  wifi_set_channel(2);
 
   //Detector LED
   pinMode(LED_BUILTIN, OUTPUT);
@@ -129,7 +129,7 @@ void setup()
   
   // Wifi setup
   wifi_set_opmode(STATION_MODE);
-  wifi_promiscuous_enable(0);
+  wifi_promiscuous_enable(1);
   WiFi.disconnect();
 
   // Set sniffer callback
@@ -143,5 +143,10 @@ void setup()
 
 void loop()
 {
-  delay(10);
+ if(channelHopping){
+      curChannel++;
+      if(curChannel > maxChannel) curChannel = 1;
+      wifi_set_channel(curChannel);
+   } 
+ delay(10);
 }

@@ -32,12 +32,14 @@ const char* password = "123456789";
 
 void sniffer(uint8_t *buf, uint16_t len) {
 
+Mac m;
 if(buf[12] == 0xA0){
 
-      dissoc = 500;
+      dissoc = 200;
     }
 if(buf[12] == 0xC0){
-      deauth = 500;
+      deauth = 200;
+      m.Mac::_println();
     }
 else{
       if (deauth >= 1){

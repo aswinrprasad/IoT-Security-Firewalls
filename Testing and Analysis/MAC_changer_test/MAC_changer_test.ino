@@ -5,8 +5,8 @@
  
 String apiKey = "4VMADMVD8WTB0SLB";     //  Enter your Write API key from ThingSpeak
 
-const char *ssid =  "Bharath";     // replace with your wifi ssid and wpa2 key
-const char *pass =  "qazedcwsx";
+const char *ssid =  "ROGUE";     // replace with your wifi ssid and wpa2 key
+const char *pass =  "12345678";
 const char* server = "api.thingspeak.com";
 
 IPAddress local_IP(192,168,4,22);
@@ -16,7 +16,9 @@ IPAddress subnet(255,255,255,0);
 #define DHTPIN 5          //pin where the dht11 is connected
  
 DHT dht(DHTPIN, DHT11);
-
+int cnt=0;
+int mx = 10;
+int f=0;
 WiFiClient client;
  
 void setup() 
@@ -29,8 +31,6 @@ void setup()
         
        Serial.println("Connecting to ");
        Serial.println(ssid);
-        WiFi.softAPConfig(local_IP, gateway, subnet);
-        WiFi.softAP("NODEMCU");
  
        WiFi.begin(ssid, pass);
  
@@ -43,7 +43,9 @@ void setup()
       Serial.println("WiFi connected");
  
 }
- 
+int getchan(){
+  return random(1+rand()%((11+1)-1));
+}
 void loop() 
 {
   
@@ -85,11 +87,28 @@ void loop()
           client.stop();
  
           Serial.println("Waiting...");
-  uint8_t mac[6];
-  makeRandomMac(mac);
-  changeMac(mac);
-  Serial.print("MAC address is ");
-  Serial.println(WiFi.macAddress());
-  WiFi.begin(ssid, pass);
+  //WiFi.disconnect();
+  cnt++;
+  if(cnt==mx){
+    uint8_t mac[6];
+    makeRandomMac(mac);
+    bool res = changeMac(mac);
+    Serial.print("MAC address is ");
+    //Serial.println(res);
+    Serial.println(WiFi.macAddress());
+    WiFi.begin(ssid, pass);
+    cnt=0;
+    f=1;
+  }
+  if (WiFi.status() != WL_CONNECTED && f!=1) {
+    Serial.print("WiFi Disconnected abruptly! Trying to Connect");
+    while (WiFi.status() != WL_CONNECTED) {
+      delay(500);
+      Serial.print(".");
+    }
+    Serial.print("Connected!\n");
+  }
+  f=0;
+  
   delay(10000);
 }

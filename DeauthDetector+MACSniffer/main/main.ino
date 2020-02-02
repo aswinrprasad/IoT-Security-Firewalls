@@ -78,36 +78,13 @@ void wifi_sniffer_packet_handler(uint8_t *buff, uint16_t len)
     char ssid[32] = {0};
     digitalWrite(LED_BUILTIN, LOW);
     digitalWrite(2, LOW);
-    Serial.printf("\n%s | %s | %s | %u | %02d | %u | %u(%-2u) | %-28s | %u | %u | %u | %u | %u | %u | %u | %u | ",
+    Serial.printf("\n%s | %s | %u | %u(%-2u) | %-28s | %u | ",
     addr1,
     addr2,
-    addr3,
     wifi_get_channel(),
-    ppkt->rx_ctrl.rssi,
-    frame_ctrl->protocol,
     frame_ctrl->type,
     frame_ctrl->subtype,
-    wifi_pkt_type2str((wifi_promiscuous_pkt_type_t)frame_ctrl->type, (wifi_mgmt_subtypes_t)frame_ctrl->subtype),
-    frame_ctrl->to_ds,
-    frame_ctrl->from_ds,
-    frame_ctrl->more_frag,
-    frame_ctrl->retry,
-    frame_ctrl->pwr_mgmt,
-    frame_ctrl->more_data,
-    frame_ctrl->wep,
-    frame_ctrl->strict);
-    /*
-    if (beacon_frame->tag_length >= 32)
-    {
-      strncpy(ssid, beacon_frame->ssid, 31);
-    }
-    else
-    {
-      strncpy(ssid, beacon_frame->ssid, beacon_frame->tag_length);
-    }
-  
-    Serial.printf("%s", ssid);
-    */
+    wifi_pkt_type2str((wifi_promiscuous_pkt_type_t)frame_ctrl->type, (wifi_mgmt_subtypes_t)frame_ctrl->subtype));
   }
   else{
     digitalWrite(LED_BUILTIN, HIGH);
@@ -137,7 +114,7 @@ void setup()
   wifi_promiscuous_enable(1);
 
   // Print header
-  Serial.printf("\n\n     MAC RECIEVER 1|      MAC SENDER 2|      MAC Address 3| Ch| RSSI| Pr| T(S)  |           Frame type         |TDS|FDS| MF|RTR|PWR| MD|ENC|STR|   SSID");
+  Serial.printf("\n\n     MAC RECIEVER 1|      MAC SENDER 2| Ch|           Frame type         |");
 
 }
 

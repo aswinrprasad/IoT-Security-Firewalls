@@ -1,3 +1,7 @@
+/*
+ * Author : Aswin Raghuprasad
+ */
+
 #include <DHT.h>  // Including library for dht
 
 #include <ESP8266WiFi.h>

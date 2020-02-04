@@ -1,4 +1,6 @@
-
+/*
+ * Author : Aswin Raghuprasad
+ */
 #include <ESP8266WiFi.h>
  
 String apiKey = "401RDNI2N6QT1YNR";     //  Enter your Write API key from ThingSpeak

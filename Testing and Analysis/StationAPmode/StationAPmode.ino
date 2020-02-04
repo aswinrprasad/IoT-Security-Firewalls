@@ -1,3 +1,8 @@
+/*
+ * Author : Aswin Raghuprasad
+ * NB : Still in testing phase
+ */
+
 #include <ESP8266WiFi.h>
 
 const char* ssid = "DopeDevice";

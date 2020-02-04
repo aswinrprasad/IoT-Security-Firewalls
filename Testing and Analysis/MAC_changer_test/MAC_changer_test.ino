@@ -1,3 +1,8 @@
+/*
+ * Author : Aswin Raghuprasad
+ * Reference : Roboindia.com
+ */
+
 #include <DHT.h>  // Including library for dht
 
 #include <ESP8266WiFi.h>

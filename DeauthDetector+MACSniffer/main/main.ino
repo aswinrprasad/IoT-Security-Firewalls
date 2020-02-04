@@ -44,6 +44,8 @@ wifi_promiscuous_pkt_type_t packet_type_parser(uint16_t len)
     }
 }
 
+
+  
 // In this example, the packet handler function does all the parsing and output work.
 // This is NOT ideal.
 void wifi_sniffer_packet_handler(uint8_t *buff, uint16_t len)
@@ -67,24 +69,25 @@ void wifi_sniffer_packet_handler(uint8_t *buff, uint16_t len)
   mac2str(hdr->addr1, addr1);
   mac2str(hdr->addr2, addr2);
   mac2str(hdr->addr3, addr3);
-
+  
   // Output info to serial
   
 
   // Print ESSID if beacon
   if (frame_ctrl->type == WIFI_PKT_MGMT && frame_ctrl->subtype == DEAUTHENTICATION)
   {
-    deauth = 200;
+    //deauth = 200;
     char ssid[32] = {0};
     digitalWrite(LED_BUILTIN, LOW);
     digitalWrite(2, LOW);
-    Serial.printf("\n%s | %s | %u | %u(%-2u) | %-28s | %u | ",
+    Serial.printf("\n%s | %s | %u | %-28s |",
     addr1,
     addr2,
     wifi_get_channel(),
-    frame_ctrl->type,
-    frame_ctrl->subtype,
+    //frame_ctrl->type,
+    //frame_ctrl->subtype,
     wifi_pkt_type2str((wifi_promiscuous_pkt_type_t)frame_ctrl->type, (wifi_mgmt_subtypes_t)frame_ctrl->subtype));
+    
   }
   else{
     digitalWrite(LED_BUILTIN, HIGH);
@@ -114,7 +117,9 @@ void setup()
   wifi_promiscuous_enable(1);
 
   // Print header
-  Serial.printf("\n\n     MAC RECIEVER 1|      MAC SENDER 2| Ch|           Frame type         |");
+  Serial.printf("\n\n    MAC RECIEVER 1|       MAC SENDER 2| Ch|           Frame type         |");
+  Serial.printf("\n------------------------------------------------------------------------------");
+  
 
 }
 

@@ -1,6 +1,6 @@
-// ESP8266 Simple sniffer
-// 2018 Carve Systems LLC
-// Angel Suarez-B Martin
+/*
+ * Author : Aswin Raghuprasad
+ */
 
 #include <Arduino.h>
 #include <ESP8266WiFi.h>

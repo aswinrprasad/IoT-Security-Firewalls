@@ -97,17 +97,6 @@ void loop()
     Serial.println(WiFi.macAddress());
     WiFi.begin(ssid, pass);
     cnt=0;
-    f=1;
   }
-  if (WiFi.status() != WL_CONNECTED && f!=1) {
-    Serial.print("WiFi Disconnected abruptly! Trying to Connect");
-    while (WiFi.status() != WL_CONNECTED) {
-      delay(500);
-      Serial.print(".");
-    }
-    Serial.print("Connected!\n");
-  }
-  f=0;
-  
   delay(10000);
 }
